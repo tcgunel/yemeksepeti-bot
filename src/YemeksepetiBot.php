@@ -111,12 +111,14 @@ class YemeksepetiBot extends YemeksepetiBotClient
                 $description  = $this->findProductDescriptionFromHtml($match);
                 $image        = $this->findProductImagePathFromHtml($match);
                 $prices       = $this->findProductPriceFromHtml($match);
+                $stock        = $this->findProductStockFromHtml($match);
 
                 $products[] = new Product([
                     "id"           => $product_id,
                     "title"        => $product_name,
                     "description"  => $description,
                     "image"        => $image,
+                    "stock"        => $stock,
                     "price"        => $this->fixPrice($prices["price"]),
                     "normal_price" => isset($prices["normal_price"]) ? $this->fixPrice($prices["normal_price"]) : null,
                 ]);
@@ -145,12 +147,22 @@ class YemeksepetiBot extends YemeksepetiBotClient
     {
         preg_match('/data-productname=\"(.*?)\"/', $html, $matches);
 
-        if (empty($matches)) {
+        if (ViewMode::GRID_VIEW){
 
-            preg_match('/data-top-sold-product="false">([^\s].*?)<\/a> <\/div>/', $html, $matches);
+            preg_match('/<a.*>(.*?)<\/a>/', $html, $matches);
 
         }
 
+        if (empty($matches)) {
+
+            preg_match('/class="getProductDetail" data-product-id=".*?" data-category-name=".*?" data-top-sold-product="false">(.*?)<\/a>/', $html, $matches);
+
+        }
+
+        if (empty($matches)){
+
+            preg_match('/data-top-sold-product="false">([^\s].*?)<\/(?:a|strong)> <(?:\/div|span class="orderWarning")>/', $html, $matches);
+        }
 
         if (is_array($matches) && count($matches) === 2) {
 
@@ -236,6 +248,19 @@ class YemeksepetiBot extends YemeksepetiBotClient
         }
 
         return false;
+    }
+
+    public function findProductStockFromHtml($html): bool
+    {
+        preg_match('/<span class="orderWarning">.*?<\/span>/', $html, $matches);
+
+        if (is_array($matches) && count($matches) === 1) {
+
+            return false;
+
+        }
+
+        return true;
     }
 
     public function findProductImagePathFromHtml($html)

@@ -22,6 +22,9 @@ class Product extends BaseModel
     /** @var string */
     public $image;
 
+    /** @var bool */
+    public $stock;
+
     public function __construct(array $abstract)
     {
         parent::__construct($abstract);
