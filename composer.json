@@ -1,0 +1,47 @@
+{
+    "name": "tcgunel/yemeksepeti-bot",
+    "description": "Yemeksepeti sayfasındaki ürünlerin kategorize olarak çekilmesi.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tolga Can GÜNEL",
+            "email": "info@mobius.studio"
+        }
+    ],
+    "require": {
+        "php": "^7.2",
+        "illuminate/support": "*",
+        "guzzlehttp/guzzle": "*"
+    },
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "TCGunel\\YemeksepetiBot\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TCGunel\\YemeksepetiBot\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TCGunel\\YemeksepetiBot\\YemeksepetiBotServiceProvider"
+            ],
+            "aliases": {
+                "YemeksepetiBot": "YemeksepetiBot"
+            }
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/paratest --processes 6",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "orchestra/testbench": "*",
+        "brianium/paratest": "*"
+    }
+}
