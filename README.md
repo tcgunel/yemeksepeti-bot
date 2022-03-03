@@ -8,9 +8,9 @@
 Yemeksepeti sayfasındaki ürünlerin kategorize olarak çekilmesi.
 
 ## Requirements
-| PHP        | Package |
-|-----------|---------|
-| ^7.3-^8.0 | v1.0.0  |
+| PHP            | Package |
+|----------------|---------|
+| ^7.3-^8.0-^9.0 | v1.0.0  |
 
 ## Kurulum
 
